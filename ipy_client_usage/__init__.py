@@ -28,7 +28,7 @@ def wait_and_dump(fname, client, sample_frequency=0.5, uuid_to_name=None,
     theids = client.outstanding
     client.spin()
     with open(fname, 'w') as fh:
-        save_client_history(fh, client, uuid_to_name=uuid_to_name)
+        dump(fh, client, uuid_to_name=uuid_to_name)
     while theids.intersection(client.outstanding):
         if timeout >= 0 and (time.time() - tic) > timeout:
             break

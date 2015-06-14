@@ -86,7 +86,7 @@ with open('cluster_dump.json', 'w') as fh:
 Could be replaced with:
 
 ```
-ipy_client_usage.wait_and_dump('cluster_dump.json', view, uuid_to_name)
+ipy_client_usage.wait_and_dump('cluster_dump.json', view, uuid_to_name=uuid_to_name)
 ```
 
 This can be watched with:
@@ -94,4 +94,3 @@ This can be watched with:
 ```
 python -m ipy_client_usage.watch cluster_dump.json
 ```
-
