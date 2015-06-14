@@ -15,9 +15,8 @@ def dump(fh, client, uuid_to_name=None):
 
     ids = client.history
     result = client.get_result(ids)
-    metadata = result.metadata
-    key = [uuid_to_name.get(job_id, job_id) for job_id in ids]
-    metadata = dict(zip(key, metadata))
+    names = [uuid_to_name.get(job_id, job_id) for job_id in ids]
+    metadata = dict(zip(ids, zip(names, result.metadata)))
     json.dump(metadata, fh, default=json_datetime)
 
 

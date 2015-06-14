@@ -39,7 +39,8 @@ def update_job_artists(ax, status,
     existing_artists = existing_artists or {}
     engine_positions = engine_positions or []
 
-    for name, metadata in status.items():
+    for uuid in status:
+        name, metadata = status[uuid]
         from_iso = lambda dt_str: datetime.strptime(dt_str,
                                                     "%Y-%m-%dT%H:%M:%S.%f")
 
@@ -64,15 +65,15 @@ def update_job_artists(ax, status,
                                0 + e_offset,
                                0 + e_offset]) - 0.5
 
-            if name in existing_artists:
-                poly, text = existing_artists[name]
+            if uuid in existing_artists:
+                poly, text = existing_artists[uuid]
                 poly._path.vertices[:, 0] = ax.convert_xunits(poly_x)
                 text.set_text(message)
             else:
                 poly, = ax.fill(poly_x, poly_y, facecolor='red', alpha=0.5)
                 text = ax.text(start + (stop - start) / 2, e_offset, message,
                                va='center', ha='center')
-                existing_artists[name] = [poly, text]
+                existing_artists[uuid] = [poly, text]
     return existing_artists, engine_positions
 
 
