@@ -50,7 +50,7 @@ def watch_dump(fname, frequency=0.1):
                     try:
                         status = json.load(fh)
                     except ValueError:
-                        if count >= n_retries:
+                        if count >= n_retries - 1:
                             print("The json file couldn't be loaded after "
                                   "{} attempts.".format(count))
                             raise
