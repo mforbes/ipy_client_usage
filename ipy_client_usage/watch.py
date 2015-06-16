@@ -44,7 +44,7 @@ def watch_dump(fname, frequency=0.1):
 
             # We allow multiple attempts to load the file in case the file
             # hasn't yet been fully written.
-            n_retries = 5
+            n_retries = 10
             for count in range(n_retries):
                 with open(fname, 'r') as fh:
                     try:

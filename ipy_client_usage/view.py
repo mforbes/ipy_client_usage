@@ -49,9 +49,11 @@ def update_job_artists(ax, status,
             if metadata['completed']:
                 stop = from_iso(metadata['completed'])
                 message = '{}\n({}s)'.format(name, (stop - start).seconds)
+                color = 'green'
             else:
                 stop = from_iso(metadata['completed'])
                 message = '{}\n(still working...)'.format(name)
+                color = 'red'
 
             engine_id = metadata['engine_id']
             if engine_id not in engine_positions:
@@ -67,10 +69,11 @@ def update_job_artists(ax, status,
 
             if uuid in existing_artists:
                 poly, text = existing_artists[uuid]
+                poly.set_facecolor(color)
                 poly._path.vertices[:, 0] = ax.convert_xunits(poly_x)
                 text.set_text(message)
             else:
-                poly, = ax.fill(poly_x, poly_y, facecolor='red', alpha=0.5)
+                poly, = ax.fill(poly_x, poly_y, facecolor=color, alpha=0.5)
                 text = ax.text(start + (stop - start) / 2, e_offset, message,
                                va='center', ha='center')
                 existing_artists[uuid] = [poly, text]
