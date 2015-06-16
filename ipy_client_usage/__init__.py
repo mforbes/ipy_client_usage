@@ -31,7 +31,7 @@ def dump(fname, client, uuid_to_name=None):
     return time.time() - tic
 
 
-def wait_and_dump(fname, client, sample_frequency=0.5, uuid_to_name=None,
+def wait_and_dump(fname, client, sample_time=0.5, uuid_to_name=None,
                   timeout=-1):
     # A close lift from Client.wait.
     tic = time.time()
@@ -42,7 +42,8 @@ def wait_and_dump(fname, client, sample_frequency=0.5, uuid_to_name=None,
         if timeout >= 0 and (time.time() - tic) > timeout:
             break
         time_since_last_dump = time.time() - last_time
-        time.sleep(max(sample_frequency, 2*dump_time) - time_since_last_dump)
+        sleep_time = max(sample_time, 2*dump_time) - time_since_last_dump
+        time.sleep(abs(sleep_time))
         client.spin()
         dump_time = dump(fname, client, uuid_to_name=uuid_to_name)
     return len(theids.intersection(client.outstanding)) == 0
